@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Drill!</title>
+		<link rel="stylesheet" href="style/drill.css">
+		<script src="js/vendor/require/require.js"></script>
+		<script>
+			require.config({
+				baseUrl : "js",
+				paths : {
+					//"some" : "some/v1.0"
+				}
+			});
+
+		</script>		
+		<script src="js/drill.js"></script>		
+	</head>
+	<body>
+
+		<div class="vraag">
+			<form>
+				<h2>Vraag 1</h2>
+				<div class="antwoord">
+					<input class="fout" type="text" value="fout!"/>
+				</div>
+			</form>
+
+			<form>
+				<h2>Vraag 2</h2>
+				<div class="antwoord">
+					<input class="juist" type="text" value="goed!"/>
+				</div>
+			</form>
+
+		</div>
+	</body>
+</html>
