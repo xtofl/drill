@@ -1,12 +1,17 @@
 
-.vraag {
+.question_text {
 	color: blue;
 }
 
-.juist {
+
+.wrong {
+	color: red;
+}
+
+.right {
 	color: green;
 }
 
-.fout {
-	color: red;
+.hidden {
+	display: none;
 }
