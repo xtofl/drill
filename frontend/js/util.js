@@ -1,3 +1,3 @@
 define({
-	go: function(){alert()}
+	go: function(){}
 });
