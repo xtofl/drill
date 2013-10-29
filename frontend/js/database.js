@@ -1,7 +1,10 @@
 define({
 	questions: function(){
+		
 		var data = [{text: "slaaf", correct_answer: "servus"}];
+		
 		var objects = [];
+		
 		data.forEach(function(q){
 			objects.push({
 				ask: function(setHtml){
