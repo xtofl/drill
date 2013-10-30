@@ -38,7 +38,6 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 		);
 	});
 	q.ask(function(html) {
-		feedBack.addClass("hidden");
 		currentQuestionElement.text(html);
 	});
 });
