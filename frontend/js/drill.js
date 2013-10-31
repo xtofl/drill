@@ -42,9 +42,9 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 		});
 	};
 
-	database.withData(function(data) {
+	database.withData("../resources/latijn_Pegasus.json", function(data) {
 
-		var questionFactory = database.createQuestionFactory(data);
+		var questionFactory = database.createQuestionFactory(data, database.Q_LatijnNederlands);
 
 		var ask = function(question) {
 			clearInput();
