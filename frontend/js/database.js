@@ -5,7 +5,7 @@ define({
 		[ {text: "slaaf", correct_answer: "servus"}
 		, {text: "heer", correct_answer: "dominus"}
 		, {text: "servus", correct_answer: "slaaf"}
-		, {text: "dominus", correct_answer: "heer"}
+		, {text: "dominus", correct_answer: ["heer","meester"]}
 		, {text: "amare", correct_answer: "houden van"}
 
 		, {nr: 125+1, text: "Iuppiter", correct_answer: "Jupiter"}
@@ -35,7 +35,7 @@ define({
 					setHtml(q.text);
 				},
 				verify: function(answer, onRight, onWrong){ 
-					if (q.correct_answer===answer){
+					if (q.correct_answer===answer || q.correct_answer.indexOf(answer) >= 0){
 						onRight(answer);
 					} else {
 						onWrong(answer);
