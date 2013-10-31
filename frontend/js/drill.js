@@ -5,7 +5,10 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 	var questionFactory = database.createQuestionFactory(database.questionList());
 
 	var clearInput = function() {
-		inputElement.text("");
+		inputElement.val("");
+		feedBack.removeClass("wrong");
+		feedBack.removeClass("right");
+		feedBack.text("");
 	};
 
 	var bindInputToQuestion = function(question, next) {
@@ -13,13 +16,11 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 			var answer = inputElement.val();
 			question.verify(answer, function(rightAnswer) {
 				onChange.unbind();
-				feedBack.removeClass("hidden");
 				feedBack.text("$right$");
 				feedBack.addClass("right");
 				
 				next();				
 			}, function(wrongAnswer) {
-				feedBack.removeClass("hidden");
 				feedBack.text("$wrong$");
 				feedBack.addClass("wrong");
 			});
