@@ -46,7 +46,7 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 
 		var questionFactory = database.createQuestionFactory(data);
 
-		ask = function(question) {
+		var ask = function(question) {
 			clearInput();
 			bindInputToQuestion(question, function() {
 				questionFactory.withNextQuestion(ask);
