@@ -33,13 +33,13 @@ define({
 		var questions = this.createQuestions(data);
 		var nextQuestionIndex = 0;
 		return {
-			nextQuestion : function() {
+			withNextQuestion : function(then) {
 				var q = questions[nextQuestionIndex];
 				nextQuestionIndex++;
 				if (nextQuestionIndex == questions.length) {
 					nextQuestionIndex = 0;
 				}
-				return q;
+				then(q);
 			}
 		};
 	}

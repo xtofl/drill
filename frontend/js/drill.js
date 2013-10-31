@@ -36,9 +36,9 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 	ask = function(question) {
 		clearInput();
 		bindInputToQuestion(question, function(){
-			ask(questionFactory.nextQuestion());
+			questionFactory.withNextQuestion(ask);
 		});
 	};
 
-	ask(questionFactory.nextQuestion());
+	questionFactory.withNextQuestion(ask);
 });
