@@ -19,7 +19,7 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 	var updateTotals = function(){
 		wrongCounterElement.text(wrong);
 		rightCounterElement.text(right);
-		totalCounterElement.text(right + wrong);
+		totalCounterElement.text(100*right/(right + wrong) + "%");
 	};
 	
 	var bindInputToQuestion = function(question, next) {
