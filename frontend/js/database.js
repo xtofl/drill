@@ -1,9 +1,12 @@
 define({
 	data: function(){
 		
-		var data = [
-		{text: "slaaf", correct_answer: "servus"},
-		{text: "heer", correct_answer: "dominus"}
+		var data = 
+		[ {text: "slaaf", correct_answer: "servus"}
+		, {text: "heer", correct_answer: "dominus"}
+		, {text: "servus", correct_answer: "slaaf"}
+		, {text: "dominus", correct_answer: "heer"}
+		, {text: "amare", correct_answer: "houden van"}
 		];
 		return data;
 	},
