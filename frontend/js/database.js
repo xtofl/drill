@@ -1,11 +1,14 @@
 define({
-	questionList: function(){
+	data: function(){
 		
 		var data = [
 		{text: "slaaf", correct_answer: "servus"},
 		{text: "heer", correct_answer: "dominus"}
 		];
-		
+		return data;
+	},
+	
+	createQuestions: function(data) {
 		var objects = [];
 		
 		data.forEach(function(q){
@@ -26,8 +29,8 @@ define({
 		return objects;
 	},
 
-	createQuestionFactory: function(questions) {
-		var questions = questions;
+	createQuestionFactory: function(data) {
+		var questions = this.createQuestions(data);
 		var nextQuestionIndex = 0;
 		return {
 			nextQuestion : function() {
