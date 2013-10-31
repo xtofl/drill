@@ -42,9 +42,25 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 		});
 	};
 
+
+	var Q_LatijnNederlands = function(q) {
+		return {
+			ask : function(setHtml) {
+				setHtml(q.Latijn);
+			},
+			verify : function(answer, onRight, onWrong) {
+				if (q.Nederlands === answer || q.Nederlands.indexOf(answer) >= 0) {
+					onRight(answer);
+				} else {
+					onWrong(answer);
+				}
+			}
+		};
+	};
+
 	database.withData("../resources/latijn_Pegasus.json", function(data) {
 
-		var questionFactory = database.createQuestionFactory(data, database.Q_LatijnNederlands, 
+		var questionFactory = database.createQuestionFactory(data, Q_LatijnNederlands, 
 			database.createSequentialSelector(0, data.length));
 
 		var ask = function(question) {
