@@ -18,26 +18,23 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 		};
 	}();
 
-	var q = questionFactory.nextQuestion();
-	var onChange = inputElement.bind('change', function() {
-		var answer = inputElement.val();
-		q.verify(
-			answer,
-			function(rightAnswer) {
-				onChange.unbind();
+	ask = function(question) {
+		var onChange = inputElement.bind('change', function() {
+			var answer = inputElement.val();
+			question.verify(answer, function(rightAnswer) {
 				feedBack.removeClass("hidden");
 				feedBack.text("$right$");
 				feedBack.addClass("right");
-			},
-			function(wrongAnswer) {
-				onChange.unbind();
+			}, function(wrongAnswer) {
 				feedBack.removeClass("hidden");
 				feedBack.text("$wrong$");
 				feedBack.addClass("wrong");
-			}
-		);
-	});
-	q.ask(function(html) {
-		currentQuestionElement.text(html);
-	});
+			});
+		});
+		q.ask(function(html) {
+			currentQuestionElement.text(html);
+		});
+	};
+
+	ask(questionFactory.nextQuestion());
 });
