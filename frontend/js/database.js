@@ -29,17 +29,25 @@ define(["jquery"], function($) {
 			});
 			return objects;
 		},
+		
+		createSequentialSelector: function(from, to){
+			var index = from;
+			return {
+				nextIndex: function(){
+					var i = index;
+					index++;
+					if (index == to) {index = from;}
+					return i;
+				}
+			};
+		},
 
-		createQuestionFactory : function(data, creator) {
+		createQuestionFactory : function(data, creator, selector) {
 			var questions = this.createQuestions(data, creator);
 			var nextQuestionIndex = 0;
 			return {
 				withNextQuestion : function(then) {
-					var q = questions[nextQuestionIndex];
-					nextQuestionIndex++;
-					if (nextQuestionIndex == questions.length) {
-						nextQuestionIndex = 0;
-					}
+					var q = questions[selector.nextIndex()];
 					then(q);
 				}
 			};
