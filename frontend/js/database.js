@@ -1,5 +1,5 @@
 define({
-	data: function(){
+	withData: function(then){
 		
 		var data = 
 		[ {text: "slaaf", correct_answer: "servus"}
@@ -20,10 +20,8 @@ define({
 		, {nr: 134+1, text: "curare", correct_answer: "zorgen voor"}
 		, {nr: 135+1, text: "monstrare", correct_answer: "wijzen"}
 		, {nr: 136+1, text: "sicut", correct_answer: "zoals"}
-
-
 		];
-		return data;
+		then(data);
 	},
 	
 	createQuestions: function(data) {

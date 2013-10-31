@@ -5,8 +5,6 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 	var rightCounterElement = $(".feedback .rightcounter");
 	var totalCounterElement = $(".feedback .totalcounter");
 	var feedBack = $("#current_question .feedback .text");
-	var questionFactory = database.createQuestionFactory(database.data());
-
 	var clearInput = function() {
 		inputElement.val("");
 		feedBack.removeClass("wrong");
@@ -14,45 +12,47 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 		feedBack.text("");
 	};
 
-	var right=0;
-	var wrong=0;
-	var updateTotals = function(){
+	var right = 0;
+	var wrong = 0;
+	var updateTotals = function() {
 		wrongCounterElement.text(wrong);
 		rightCounterElement.text(right);
-		totalCounterElement.text(100*right/(right + wrong) + "%");
+		totalCounterElement.text(100 * right / (right + wrong) + "%");
 	};
-	
+
 	var bindInputToQuestion = function(question, next) {
 		var onChange = inputElement.bind('change', function() {
 			var answer = inputElement.val();
-			question.verify(
-				answer, 
-				function(rightAnswer) {
-					onChange.unbind();
-					feedBack.text("$right$");
-					feedBack.addClass("right");
-					right++;
-					updateTotals();
-					next();				
-				}, 
-				function(wrongAnswer) {
-					feedBack.text("$wrong$");
-					feedBack.addClass("wrong");
-					wrong++;
-					updateTotals();
-				});
+			question.verify(answer, function(rightAnswer) {
+				onChange.unbind();
+				feedBack.text("$right$");
+				feedBack.addClass("right");
+				right++;
+				updateTotals();
+				next();
+			}, function(wrongAnswer) {
+				feedBack.text("$wrong$");
+				feedBack.addClass("wrong");
+				wrong++;
+				updateTotals();
+			});
 		});
 		question.ask(function(html) {
 			currentQuestionElement.text(html);
 		});
 	};
 
-	ask = function(question) {
-		clearInput();
-		bindInputToQuestion(question, function(){
-			questionFactory.withNextQuestion(ask);
-		});
-	};
+	database.withData(function(data) {
 
-	questionFactory.withNextQuestion(ask);
+		var questionFactory = database.createQuestionFactory(data);
+
+		ask = function(question) {
+			clearInput();
+			bindInputToQuestion(question, function() {
+				questionFactory.withNextQuestion(ask);
+			});
+		};
+
+		questionFactory.withNextQuestion(ask);
+	});
 });
