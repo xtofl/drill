@@ -58,10 +58,25 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 		};
 	};
 
+	var	createSequentialSelector = function(from, to){
+			var index = from;
+			return {
+				nextIndex: function(){
+					var i = index;
+					index++;
+					if (index == to) {index = from;}
+					return i;
+				}
+			};
+	};
+
+
 	database.withData("../resources/latijn_Pegasus.json", function(data) {
 
-		var questionFactory = database.createQuestionFactory(data, Q_LatijnNederlands, 
-			database.createSequentialSelector(0, data.length));
+		var questionFactory = database.createQuestionFactory(
+			data, 
+			Q_LatijnNederlands, 
+			createSequentialSelector(0, data.length));
 
 		var ask = function(question) {
 			clearInput();
