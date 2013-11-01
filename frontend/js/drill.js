@@ -1,4 +1,4 @@
-require(["./util", "jquery", "database"], function(util, $, database) {
+require(["./util", "jquery", "database", "questionfactories"], function(util, $, database, questionfactories) {
 	var currentQuestionElement = $("#current_question .question_text");
 	var inputElement = $("#current_question .answer_input");
 	var wrongCounterElement = $(".feedback .wrongcounter");
@@ -43,20 +43,7 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 	};
 
 
-	var Q_LatijnNederlands = function(q) {
-		return {
-			ask : function(setHtml) {
-				setHtml(q.Latijn);
-			},
-			verify : function(answer, onRight, onWrong) {
-				if (q.Nederlands === answer || q.Nederlands.indexOf(answer) >= 0) {
-					onRight(answer);
-				} else {
-					onWrong(answer);
-				}
-			}
-		};
-	};
+
 
 	var	createSequentialSelector = function(from, to){
 			var index = from;
@@ -75,7 +62,7 @@ require(["./util", "jquery", "database"], function(util, $, database) {
 
 		var questionFactory = database.createQuestionFactory(
 			data, 
-			Q_LatijnNederlands, 
+			questionfactories.LatijnNederlands, 
 			createSequentialSelector(0, data.length));
 
 		var ask = function(question) {
