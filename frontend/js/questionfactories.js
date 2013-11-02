@@ -2,6 +2,9 @@ define([], function(){
 	return {
 		LatijnNederlands : function(q) {
 			return {
+				html: function() {
+					return q.Latijn;
+				},
 				ask : function(setHtml) {
 					setHtml(q.Latijn);
 				},

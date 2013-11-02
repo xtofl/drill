@@ -17,26 +17,32 @@
 	</head>
 	<body>
 		<div class="settings">
-			<div class="title">Settings</div>
+			<div class="title">
+				Settings
+			</div>
 			<div class="sequence line">
-				<div>sequence: </div>
-				<select id="settings_sequence">
-					<option>$sequential$</option>
-					<option>$shuffled$</option>
-				</select>
-				<div class="feedback">loaded</div>
+				<div>
+					sequence:
+				</div>
+				<select id="settings_sequence"></select>
+				<div class="feedback">
+					loaded
+				</div>
 			</div>
 		</div>
 		<div id="current_question">
-			<div class="question_text">
-				slaaf
-			</div>
-			<input class="answer_input" type="text"/>
+			<div class="question_text"></div>
+			<input id="answer_input" class="answer_input" type="text"/>
+		</div>
+		<div>
 			<div class="feedback">
 				<span class="text"></span>
 				juist:<span class="rightcounter">0</span>
 				fout:<span class="wrongcounter">0</span>
 				totaal:<span class="totalcounter">0</span>
+				<div id="wronglist">
+					<ul></ul>
+				</div>
 			</div>
 		</div>
 	</body>

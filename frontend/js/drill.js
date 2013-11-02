@@ -49,6 +49,13 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers"], fun
 		totalCounterElement.text(100 * right / (right + wrong) + "%");
 	};
 
+	var wrongList = {
+		append: function(question){
+			var li = document.createElement("li");
+			li.innerHTML = question.html();
+			$("#wronglist").append(li);
+		}
+	};
 	var bindInputToQuestion = function(question, next) {
 		var onChange = inputElement.bind('change', function() {
 			var answer = inputElement.val();
@@ -62,6 +69,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers"], fun
 			}, function(wrongAnswer) {
 				feedBack.text("$wrong$");
 				feedBack.addClass("wrong");
+				wrongList.append(question);
 				wrong++;
 				updateTotals();
 			});

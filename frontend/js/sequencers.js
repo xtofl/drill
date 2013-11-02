@@ -19,9 +19,12 @@ define([], function() {
 		createShuffledSelector : function(data, onWrap) {
 			//+ Jonas Raoni Soares Silva
 			//@ http://jsfromhell.com/array/shuffle [v1.0]
-			function shuffle(o){ //v1.0
-			    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-			    return o;
+			function shuffled(original){ //v1.0
+				var r=original.slice(0);
+			    for(var j, x, i = r.length; 
+			    	i !== 0; 
+			    	j = Math.floor(Math.random() * i), x = r[--i], r[i] = r[j], r[j] = x);
+			    return r;
 			};
 			var indices = [];
 			for(var i=0; i!=data.length; ++i){ indices.push(i); }
