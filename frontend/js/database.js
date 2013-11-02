@@ -15,13 +15,17 @@ define(["jquery"], function($) {
 			return objects;
 		},
 		
-		createQuestionFactory : function(data, creator, selector) {
+		createQuestionFactory : function(data, creator, sequencer) {
 			var questions = this.createQuestions(data, creator);
 			var nextQuestionIndex = 0;
 			return {
+				sequencer: sequencer,
 				withNextQuestion : function(then) {
-					var q = questions[selector.nextIndex()];
+					var q = questions[this.sequencer.nextIndex()];
 					then(q);
+				},
+				setSequencer: function(sequencer) {
+					this.sequencer = sequencer;
 				}
 			};
 		}

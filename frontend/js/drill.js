@@ -16,6 +16,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers"], fun
 			name : '$sequential$'
 		};
 		values.shuffled = {
+			constructor : sequencers.createShuffledSelector,
 			name : '$shuffled'
 		};
 
@@ -28,7 +29,6 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers"], fun
 		sequenceInput.on('change', function(what) {
 			var option = values[sequenceInput.val()];
 			questionFactory.setSequencer(option.constructor(data));
-			alert(sequenceInput.val());
 		});
 	};
 	
