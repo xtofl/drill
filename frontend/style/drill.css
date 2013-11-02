@@ -25,3 +25,12 @@
 .hidden {
 	display: none;
 }
+
+#wronglist {
+	font-size: .8em;
+	color: red;
+}
+
+#wronglist .wronganswer {
+	color: orange;
+}

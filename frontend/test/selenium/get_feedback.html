@@ -4,57 +4,48 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://127.0.0.1:8020/drill/frontend/index.html" />
-<title>start_questions_appear</title>
+<title>get feedback</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">start_questions_appear</td></tr>
+<tr><td rowspan="1" colspan="3">get feedback</td></tr>
 </thead><tbody>
-<tr>
-	<td>setTimeout</td>
-	<td></td>
-	<td>100</td>
-</tr>
 <tr>
 	<td>open</td>
 	<td></td>
-	<td>http://127.0.0.1:8020/drill/frontend/index.html</td>
+	<td>http://127.0.0.1:8020/drill/frontend/</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>css=div.question_text</td>
+	<td>setTimeout</td>
 	<td></td>
+	<td>1000</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>css=#answer_input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>css=input[type=&quot;text&quot;]</td>
-	<td>Jupiterr</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=.feedback .rightcounter</td>
-	<td>0</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=.feedback .wrongcounter</td>
-	<td>1</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>css=input[type=&quot;text&quot;]</td>
-	<td>Jupiter</td>
+	<td>select</td>
+	<td>//*[@id=&quot;settings_sequence&quot;]</td>
+	<td>$sequential$</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>css=.feedback .rightcounter</td>
+	<td>//*[@class=&quot;question_text&quot;]</td>
+	<td>Iuppiter</td>
+</tr>
+<!--here, the test can start-->
+<tr>
+	<td>type</td>
+	<td>//*[@id=&quot;answer_input&quot;]</td>
+	<td>hupiter</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//*[@class=&quot;wrongcounter&quot;]</td>
 	<td>1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//*[@id=&quot;wronglist&quot;]</td>
+	<td>Iuppiter</td>
 </tr>
 
 </tbody></table>
