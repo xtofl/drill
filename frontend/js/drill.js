@@ -1,4 +1,5 @@
-require(["./util", "jquery", "database", "questionfactories"], function(util, $, database, questionfactories) {
+require(["./util", "jquery", "database", "questionfactories", "sequencers"], 
+function(util, $, database, questionfactories, sequencers) {
 	var currentQuestionElement = $("#current_question .question_text");
 	var inputElement = $("#current_question .answer_input");
 	var wrongCounterElement = $(".feedback .wrongcounter");
@@ -42,28 +43,12 @@ require(["./util", "jquery", "database", "questionfactories"], function(util, $,
 		});
 	};
 
-
-
-
-	var	createSequentialSelector = function(from, to){
-			var index = from;
-			return {
-				nextIndex: function(){
-					var i = index;
-					index++;
-					if (index == to) {index = from;}
-					return i;
-				}
-			};
-	};
-
-
 	database.withData("../resources/latijn_Pegasus.json", function(data) {
 
 		var questionFactory = database.createQuestionFactory(
 			data, 
 			questionfactories.LatijnNederlands, 
-			createSequentialSelector(0, data.length));
+			sequencers.createSequentialSelector(0, data.length));
 
 		var ask = function(question) {
 			clearInput();
