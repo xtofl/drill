@@ -1,11 +1,39 @@
-require(["./util", "jquery", "database", "questionfactories", "sequencers"], 
-function(util, $, database, questionfactories, sequencers) {
+require(["./util", "jquery", "database", "questionfactories", "sequencers"], function(util, $, database, questionfactories, sequencers) {
 	var currentQuestionElement = $("#current_question .question_text");
 	var inputElement = $("#current_question .answer_input");
 	var wrongCounterElement = $(".feedback .wrongcounter");
 	var rightCounterElement = $(".feedback .rightcounter");
 	var totalCounterElement = $(".feedback .totalcounter");
 	var feedBack = $("#current_question .feedback .text");
+
+	var data, questionFactory;
+	var bindToSettings = function() {
+		var sequenceInput = $("#settings_sequence");
+
+		var values = {};
+		values.sequential = {
+			constructor : sequencers.createSequentialSelector,
+			name : '$sequential$'
+		};
+		values.shuffled = {
+			name : '$shuffled'
+		};
+
+		var output = [];
+		for (key in values) {
+			output.push('<option value="' + key + '">' + values[key].name + '</option>');
+		};
+		sequenceInput.html(output.join(''));
+
+		sequenceInput.on('change', function(what) {
+			var option = values[sequenceInput.val()];
+			questionFactory.setSequencer(option.constructor(data));
+			alert(sequenceInput.val());
+		});
+	};
+	
+	bindToSettings();
+
 	var clearInput = function() {
 		inputElement.val("");
 		feedBack.removeClass("wrong");
@@ -42,13 +70,9 @@ function(util, $, database, questionfactories, sequencers) {
 			currentQuestionElement.text(html);
 		});
 	};
-
-	database.withData("../resources/latijn_Pegasus.json", function(data) {
-
-		var questionFactory = database.createQuestionFactory(
-			data, 
-			questionfactories.LatijnNederlands, 
-			sequencers.createSequentialSelector(0, data.length));
+	database.withData("../resources/latijn_Pegasus.json", function(questiondata) {
+		data = questiondata;
+		questionFactory = database.createQuestionFactory(data, questionfactories.LatijnNederlands, sequencers.createSequentialSelector(0, data.length));
 
 		var ask = function(question) {
 			clearInput();

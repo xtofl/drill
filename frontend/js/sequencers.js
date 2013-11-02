@@ -1,12 +1,12 @@
 define([], function() {
 	return {
-		createSequentialSelector : function(from, to, onWrap) {
-			var index = from;
+		createSequentialSelector : function(data, onWrap) {
+			var index = 0;
 			return {
 				nextIndex : function() {
 					var i = index;
 					index++;
-					if (index == to) {
+					if (index == data.length) {
 						if (onWrap) {
 							onWrap();
 						}
