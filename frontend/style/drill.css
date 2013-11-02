@@ -3,6 +3,13 @@
 	color: blue;
 }
 
+.settings {
+	border: solid 1px;	
+}
+
+.line * {
+	display: inline;
+}
 
 .wrong {
 	color: red;
