@@ -17,7 +17,17 @@ define([], function() {
 			};
 		},
 		createShuffledSelector : function(data, onWrap) {
-			var index = 10;
+			//+ Jonas Raoni Soares Silva
+			//@ http://jsfromhell.com/array/shuffle [v1.0]
+			function shuffle(o){ //v1.0
+			    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+			    return o;
+			};
+			var indices = [];
+			for(var i=0; i!=data.length; ++i){ indices.push(i); }
+			shuffle(indices);
+						
+			var index = 0;
 			return {
 				nextIndex : function() {
 					var i = index;
@@ -28,7 +38,7 @@ define([], function() {
 						}
 						index = from;
 					}
-					return i;
+					return indices[i];
 				}
 			};
 		}
