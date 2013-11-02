@@ -6,7 +6,7 @@ define([], function(){
 					return q.Latijn;
 				},
 				ask : function(setHtml) {
-					setHtml(q.Latijn);
+					setHtml(this.html());
 				},
 				verify : function(answer, onRight, onWrong) {
 					if (q.Nederlands === answer || q.Nederlands.indexOf(answer) >= 0) {
