@@ -1,4 +1,4 @@
-require(["./util", "jquery", "database", "questionfactories", "sequencers", "bind/settings"], function(util, $, database, questionfactories, sequencers, settings) {
+require(["./util", "jquery", "database", "questionfactories", "sequencers", "bind/settings", "util"], function(util, $, database, questionfactories, sequencers, settings, util) {
 	var currentQuestionElement = $("#current_question .question_text");
 	var inputElement = $("#current_question .answer_input");
 	var wrongCounterElement = $(".feedback .wrongcounter");
@@ -7,9 +7,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 	var feedBack = $("#current_question .feedback .text");
 	var sequenceInput = $("#settings_sequence");
 	var rangeInput = $("#settings_sequence_range");
-	var data, questionFactory;
-
-
+	var questions, questionFactory;
 
 	var values = {};
 	values.sequential = {
@@ -19,18 +17,56 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 	values.shuffled = {
 		constructor : sequencers.createShuffledSelector,
 		name : '$shuffled'
-	}; 
+	};
 
 	var settings = settings.bindToInputs({
-		sequence : { input: sequenceInput, values: values },
-		range : {input: rangeInput}
+		sequence : {
+			input : sequenceInput,
+			values : values
+		},
+		range : {
+			input : rangeInput
+		}
 	});
 	settings.connect();
+	var onNewSequencer = function(f) {
+		sequencerNotifies.push(f);
+	};
+
+	var filter = function(data, predicate) {
+		var newData = [];
+		data.forEach(function(e) {
+			if (predicate(e)) {
+				newData.push(e);
+			}
+		});
+		return newData;
+	};
+
+	var createQuestionWithinRangeFunction = function() {
+		var parts = rangeInput.val().split("-");
+		var from = parts[0] || -Infinity;
+		var to = parts[1] || Infinity;
+
+		return function(q) {
+			return from <= q.nr && q.nr <= to;
+		};
+	};
+	
+	var setNewSequencer = function(questions) {
+		var selectedSequencer = settings.constructor()(questions);
+		questionFactory.setSequencer(sequencers.createFilteredSequencer(selectedSequencer, createQuestionWithinRangeFunction()));
+		sequencerNotifies.forEach(function(f) {
+			f();
+		});
+	};
+	
+	var sequencerNotifies = [];
 	settings.onSequenceChanged(function() {
-		questionFactory.setSequencer(constructor()(data));
+		setNewSequencer(questions);
 	});
 	settings.onRangeChanged(function() {
-		questionFactory.setSequencer(constructor()(data));
+		setNewSequencer(questions);
 	});
 
 	var clearInput = function() {
@@ -78,8 +114,8 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 		});
 	};
 	database.withData("../resources/latijn_Pegasus.json", function(questiondata) {
-		data = questiondata;
-		questionFactory = database.createQuestionFactory(data, questionfactories.LatijnNederlands, sequencers.createSequentialSelector(0, data.length));
+		questions = database.createQuestions(questiondata, questionfactories.LatijnNederlands);
+		questionFactory = database.createQuestionFactory();
 
 		var ask = function(question) {
 			clearInput();
@@ -88,6 +124,10 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 			});
 		};
 
-		questionFactory.withNextQuestion(ask);
+		onNewSequencer(function() {
+			questionFactory.withNextQuestion(ask);
+		});
+
+		setNewSequencer(questions);
 	});
 });

@@ -14,7 +14,8 @@ define([], function(){
 					} else {
 						onWrong(answer);
 					}
-				}
+				},
+				nr: q.nr
 			};
 		}
 	};

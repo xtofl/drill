@@ -1,13 +1,16 @@
-define(["jquery", "sequencers"], function($, sequencers) {
+define(["jquery"], function($) {
 
 	return {
+		// required argument elements:
+		// { sequence: S, range: R }
+		// S: { input, values }
+		// R: { input }
 		bindToInputs : function(elements) {
-
 			var rangeNotifies = [];
 			var sequenceNotifies = [];
 
 			var constructor = function() {
-				var option = elements.sequence.values[sequenceInput.val()];
+				var option = elements.sequence.values[elements.sequence.input.val()];
 				return option.constructor;
 			};
 
@@ -28,16 +31,7 @@ define(["jquery", "sequencers"], function($, sequencers) {
 
 			var bindToRangeInput = function() {
 				elements.range.input.on('change', function() {
-					var value = rangeInput.val();
-					var from = value.split("-")[0];
-					var to = value.split("-")[1];
-					var newData = [];
-					data.forEach(function(e) {
-						if (from <= e.nr && e.nr <= to) {
-							newData.push(e);
-						}
-					});
-					rangeNotifiers.forEach(function(n) {
+					rangeNotifies.forEach(function(n) {
 						n();
 					});
 				});
@@ -45,6 +39,7 @@ define(["jquery", "sequencers"], function($, sequencers) {
 			return {
 				connect : function(data, sequenceFactory) {
 					bindToSequenceInput(data, sequenceFactory);
+					bindToRangeInput();
 				},
 				onRangeChanged : function(notify) {
 					rangeNotifies.push(notify);
@@ -52,6 +47,7 @@ define(["jquery", "sequencers"], function($, sequencers) {
 				onSequenceChanged : function(notify) {
 					sequenceNotifies.push(notify);
 				},
+				constructor: constructor
 			};
 		}
 	};
