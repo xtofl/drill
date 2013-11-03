@@ -39,7 +39,7 @@ define([], function() {
 						if (onWrap) {
 							onWrap();
 						}
-						index = from;
+						index = 0;
 					}
 					return indices[i];
 				}

@@ -7,32 +7,80 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers"], fun
 	var feedBack = $("#current_question .feedback .text");
 
 	var data, questionFactory;
-	var bindToSettings = function() {
-		var sequenceInput = $("#settings_sequence");
+	var bindToSettings = function(data, questionFactory) {
 
-		var values = {};
-		values.sequential = {
-			constructor : sequencers.createSequentialSelector,
-			name : '$sequential$'
-		};
-		values.shuffled = {
-			constructor : sequencers.createShuffledSelector,
-			name : '$shuffled'
-		};
+		var rangeNotifies = [];
+		var sequenceNotifies = [];
 
-		var output = [];
-		for (key in values) {
-			output.push('<option value="' + key + '">' + values[key].name + '</option>');
-		};
-		sequenceInput.html(output.join(''));
-
-		sequenceInput.on('change', function(what) {
+		var constructor = function() {
 			var option = values[sequenceInput.val()];
-			questionFactory.setSequencer(option.constructor(data));
-		});
+			return option.constructor;
+		};
+
+		var bindToSequenceInput = function() {
+			var sequenceInput = $("#settings_sequence");
+
+			var values = {};
+			values.sequential = {
+				constructor : sequencers.createSequentialSelector,
+				name : '$sequential$'
+			};
+			values.shuffled = {
+				constructor : sequencers.createShuffledSelector,
+				name : '$shuffled'
+			};
+
+			var output = [];
+			for (key in values) {
+				output.push('<option value="' + key + '">' + values[key].name + '</option>');
+			};
+			sequenceInput.html(output.join(''));
+
+			sequenceInput.on('change', function(what) {
+				sequenceNotifies.forEach(function(n) {
+					n();
+				});
+			});
+		};
+
+		var bindToRangeInput = function() {
+			var rangeInput = $("#settings_sequence_range");
+			rangeInput.on('change', function() {
+				var value = rangeInput.val();
+				var from = value.split("-")[0];
+				var to = value.split("-")[1];
+				var newData = [];
+				data.forEach(function(e) {
+					if (from <= e.nr && e.nr <= to) {
+						newData.push(e);
+					}
+				});
+				rangeNotifiers.forEach(function(n){
+					n();
+				});
+			});
+		};
+		return {
+			connect : function(data, sequenceFactory) {
+				bindToSequenceInput(data, sequenceFactory);
+			},
+			onRangeChanged : function(notify) {
+				rangeNotifies.push(notify);
+			},
+			onSequenceChanged : function(notify) {
+				sequenceNotifies.push(notify);
+			},
+		};
 	};
-	
-	bindToSettings();
+
+	var settings = bindToSettings();
+	settings.connect();
+	settings.onSequenceChanged(function() {
+		questionFactory.setSequencer(constructor()(data));
+	});
+	settings.onRangeChanged(function() {
+		questionFactory.setSequencer(constructor()(data));
+	});
 
 	var clearInput = function() {
 		inputElement.val("");
@@ -50,7 +98,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers"], fun
 	};
 
 	var wrongList = {
-		append: function(question){
+		append : function(question) {
 			var li = document.createElement("li");
 			li.innerHTML = question.html();
 			$("#wronglist").append(li);
