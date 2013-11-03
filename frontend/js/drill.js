@@ -1,79 +1,30 @@
-require(["./util", "jquery", "database", "questionfactories", "sequencers"], function(util, $, database, questionfactories, sequencers) {
+require(["./util", "jquery", "database", "questionfactories", "sequencers", "bind/settings"], function(util, $, database, questionfactories, sequencers, settings) {
 	var currentQuestionElement = $("#current_question .question_text");
 	var inputElement = $("#current_question .answer_input");
 	var wrongCounterElement = $(".feedback .wrongcounter");
 	var rightCounterElement = $(".feedback .rightcounter");
 	var totalCounterElement = $(".feedback .totalcounter");
 	var feedBack = $("#current_question .feedback .text");
-
+	var sequenceInput = $("#settings_sequence");
+	var rangeInput = $("#settings_sequence_range");
 	var data, questionFactory;
-	var bindToSettings = function(data, questionFactory) {
 
-		var rangeNotifies = [];
-		var sequenceNotifies = [];
 
-		var constructor = function() {
-			var option = values[sequenceInput.val()];
-			return option.constructor;
-		};
 
-		var bindToSequenceInput = function() {
-			var sequenceInput = $("#settings_sequence");
-
-			var values = {};
-			values.sequential = {
-				constructor : sequencers.createSequentialSelector,
-				name : '$sequential$'
-			};
-			values.shuffled = {
-				constructor : sequencers.createShuffledSelector,
-				name : '$shuffled'
-			};
-
-			var output = [];
-			for (key in values) {
-				output.push('<option value="' + key + '">' + values[key].name + '</option>');
-			};
-			sequenceInput.html(output.join(''));
-
-			sequenceInput.on('change', function(what) {
-				sequenceNotifies.forEach(function(n) {
-					n();
-				});
-			});
-		};
-
-		var bindToRangeInput = function() {
-			var rangeInput = $("#settings_sequence_range");
-			rangeInput.on('change', function() {
-				var value = rangeInput.val();
-				var from = value.split("-")[0];
-				var to = value.split("-")[1];
-				var newData = [];
-				data.forEach(function(e) {
-					if (from <= e.nr && e.nr <= to) {
-						newData.push(e);
-					}
-				});
-				rangeNotifiers.forEach(function(n){
-					n();
-				});
-			});
-		};
-		return {
-			connect : function(data, sequenceFactory) {
-				bindToSequenceInput(data, sequenceFactory);
-			},
-			onRangeChanged : function(notify) {
-				rangeNotifies.push(notify);
-			},
-			onSequenceChanged : function(notify) {
-				sequenceNotifies.push(notify);
-			},
-		};
+	var values = {};
+	values.sequential = {
+		constructor : sequencers.createSequentialSelector,
+		name : '$sequential$'
 	};
+	values.shuffled = {
+		constructor : sequencers.createShuffledSelector,
+		name : '$shuffled'
+	}; 
 
-	var settings = bindToSettings();
+	var settings = settings.bindToInputs({
+		sequence : { input: sequenceInput, values: values },
+		range : {input: rangeInput}
+	});
 	settings.connect();
 	settings.onSequenceChanged(function() {
 		questionFactory.setSequencer(constructor()(data));
