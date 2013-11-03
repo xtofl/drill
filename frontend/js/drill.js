@@ -20,6 +20,9 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 	};
 
 	var settings = settings.bindToInputs({
+		database : {
+			input : $("#database_input")
+		},
 		sequence : {
 			input : sequenceInput,
 			values : values
@@ -52,7 +55,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 			return from <= q.nr && q.nr <= to;
 		};
 	};
-	
+
 	var setNewSequencer = function(questions) {
 		var selectedSequencer = settings.constructor()(questions);
 		questionFactory.setSequencer(sequencers.createFilteredSequencer(selectedSequencer, createQuestionWithinRangeFunction()));
@@ -60,7 +63,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 			f();
 		});
 	};
-	
+
 	var sequencerNotifies = [];
 	settings.onSequenceChanged(function() {
 		setNewSequencer(questions);
@@ -113,21 +116,23 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 			currentQuestionElement.text(html);
 		});
 	};
-	database.withData("../resources/latijn_Pegasus.json", function(questiondata) {
-		questions = database.createQuestions(questiondata, questionfactories.LatijnNederlands);
-		questionFactory = database.createQuestionFactory();
+	$("#start").on('click', function() {
+		database.withData(settings.database(), function(questiondata) {
+			questions = database.createQuestions(questiondata, questionfactories.LatijnNederlands);
+			questionFactory = database.createQuestionFactory();
 
-		var ask = function(question) {
-			clearInput();
-			bindInputToQuestion(question, function() {
+			var ask = function(question) {
+				clearInput();
+				bindInputToQuestion(question, function() {
+					questionFactory.withNextQuestion(ask);
+				});
+			};
+
+			onNewSequencer(function() {
 				questionFactory.withNextQuestion(ask);
 			});
-		};
 
-		onNewSequencer(function() {
-			questionFactory.withNextQuestion(ask);
+			setNewSequencer(questions);
 		});
-
-		setNewSequencer(questions);
 	});
 });

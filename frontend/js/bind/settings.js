@@ -2,7 +2,7 @@ define(["jquery"], function($) {
 
 	return {
 		// required argument elements:
-		// { sequence: S, range: R }
+		// { database: S, sequence: S, range: R }
 		// S: { input, values }
 		// R: { input }
 		bindToInputs : function(elements) {
@@ -47,7 +47,10 @@ define(["jquery"], function($) {
 				onSequenceChanged : function(notify) {
 					sequenceNotifies.push(notify);
 				},
-				constructor: constructor
+				constructor: constructor,
+				database: function() {
+					return elements.database.input.val();
+				}
 			};
 		}
 	};
