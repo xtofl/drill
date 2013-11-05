@@ -118,7 +118,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 	};
 	$("#start").on('click', function() {
 		database.withData(settings.database(), function(questiondata) {
-			questions = database.createQuestions(questiondata, questionfactories.LatijnNederlands);
+			questions = database.createQuestions(questiondata, questionfactories.TranslateWord);
 			questionFactory = database.createQuestionFactory();
 
 			var ask = function(question) {

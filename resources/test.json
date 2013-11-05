@@ -1,15 +1,15 @@
-		[ {"nr": 126, "Latijn": "IuppiterFromTest", "Nederlands": "Jupiter"}
-		, {"nr": 127, "Latijn": "mons", "Nederlands": "berg"}
-		, {"nr": 128, "Latijn": "lux", "Nederlands": "licht"}
-		, {"nr": 129, "Latijn": "soror", "Nederlands": "zus"}
-		, {"nr": 130, "Latijn": "nomen", "Nederlands": "naam"}
-		, {"nr": 131, "Latijn": "scelus", "Nederlands": "misdaad"}
-		, {"nr": 132, "Latijn": "alius", "Nederlands": "andere"}
-		, {"nr": 133, "Latijn": "ceteri", "Nederlands": "de overige"}
-		, {"nr": 134, "Latijn": "adiuvare", "Nederlands": "helpen"}
-		, {"nr": 135, "Latijn": "curare", "Nederlands": "zorgen voor"}
-		, {"nr": 136, "Latijn": "monstrare", "Nederlands": "wijzen"}
-		, {"nr": 137, "Latijn": "sicut", "Nederlands": "zoals"}
+		[ {"nr": 126, "Latin": "IuppiterFromTest", "Dutch": "Jupiter"}
+		, {"nr": 127, "Latin": "mons", "Dutch": "berg"}
+		, {"nr": 128, "Latin": "lux", "Dutch": "licht"}
+		, {"nr": 129, "Latin": "soror", "Dutch": "zus"}
+		, {"nr": 130, "Latin": "nomen", "Dutch": "naam"}
+		, {"nr": 131, "Latin": "scelus", "Dutch": "misdaad"}
+		, {"nr": 132, "Latin": "alius", "Dutch": "andere"}
+		, {"nr": 133, "Latin": "ceteri", "Dutch": "de overige"}
+		, {"nr": 134, "Latin": "adiuvare", "Dutch": "helpen"}
+		, {"nr": 135, "Latin": "curare", "Dutch": "zorgen voor"}
+		, {"nr": 136, "Latin": "monstrare", "Dutch": "wijzen"}
+		, {"nr": 137, "Latin": "sicut", "Dutch": "zoals"}
 		
-		, {"Latijn": "dominus", "Nederlands": ["heer","meester"]}
+		, {"Latin": "dominus", "Dutch": ["heer","meester"]}
 		]

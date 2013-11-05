@@ -1,15 +1,15 @@
 define([], function(){
 	return {
-		LatijnNederlands : function(q) {
+		TranslateWord : function(q) {
 			return {
 				html: function() {
-					return q.Latijn;
+					return q.Latin;
 				},
 				ask : function(setHtml) {
 					setHtml(this.html());
 				},
 				verify : function(answer, onRight, onWrong) {
-					if (q.Nederlands === answer || q.Nederlands.indexOf(answer) >= 0) {
+					if (q.Dutch === answer || q.Dutch.indexOf(answer) >= 0) {
 						onRight(answer);
 					} else {
 						onWrong(answer);
