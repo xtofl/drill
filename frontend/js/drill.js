@@ -1,13 +1,14 @@
 require(["./util", "jquery", "database", "questionfactories", "sequencers", "bind/settings", "util"], function(util, $, database, questionfactories, sequencers, settings, util) {
-	var currentQuestionElement = $("#current_question .question_text");
-	var inputElement = $("#current_question .answer_input");
+
+	// feedback section
 	var wrongCounterElement = $(".feedback .wrongcounter");
 	var rightCounterElement = $(".feedback .rightcounter");
 	var totalCounterElement = $(".feedback .totalcounter");
 	var feedBack = $("#current_question .feedback .text");
+	
+	// settings section
 	var sequenceInput = $("#settings_sequence");
 	var rangeInput = $("#settings_sequence_range");
-	var questions, questionFactory;
 
 	var values = {};
 	values.sequential = {
@@ -72,7 +73,14 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 		setNewSequencer(questions);
 	});
 
+	// input section
+	var currentQuestionElement = $("#current_question .question_text");
+	var inputElement = $("#current_question .answer_input");
+	var questions, questionFactory;
+
+
 	var clearInput = function() {
+		removeCurrentInputListener();
 		inputElement.val("");
 		feedBack.removeClass("wrong");
 		feedBack.removeClass("right");
@@ -94,11 +102,11 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 			$("#wronglist").append(li);
 		}
 	};
+	var removeCurrentInputListener = function(){};
 	var bindInputToQuestion = function(question, next) {
-		var onChange = inputElement.bind('change', function() {
+		var currentInputListener = inputElement.bind('change', function() {
 			var answer = inputElement.val();
 			question.verify(answer, function(rightAnswer) {
-				onChange.unbind();
 				feedBack.text("$right$");
 				feedBack.addClass("right");
 				right++;
@@ -112,6 +120,7 @@ require(["./util", "jquery", "database", "questionfactories", "sequencers", "bin
 				updateTotals();
 			});
 		});
+		removeCurrentInputListener = function(){ currentInputListener.unbind(); };
 		question.ask(function(html) {
 			currentQuestionElement.text(html);
 		});

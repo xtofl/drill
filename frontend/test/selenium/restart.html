@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://127.0.0.1:8020/drill/frontend/index.html" />
-<title>select question range</title>
+<title>restart</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">select question range</td></tr>
+<tr><td rowspan="1" colspan="3">restart</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -36,17 +36,38 @@
 	<td>css=#start</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertText</td>
+	<td>//*[@class=&quot;question_text&quot;]</td>
+	<td>IuppiterFromTest</td>
+</tr>
 <!--here, the test can start-->
 <tr>
 	<td>type</td>
-	<td>css=#settings_sequence_range</td>
-	<td>8-10</td>
+	<td>//*[@id=&quot;answer_input&quot;]</td>
+	<td>hupiter</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//*[@class=&quot;wrongcounter&quot;]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//*[@id=&quot;wronglist&quot;]</td>
+	<td>IuppiterFromTest</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//*[@id=&quot;answer_input&quot;]</td>
+	<td>Jupiter</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>css=#question_text</td>
-	<td>lux</td>
+	<td>mons</td>
 </tr>
+
 </tbody></table>
 </body>
 </html>
